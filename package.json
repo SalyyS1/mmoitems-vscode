@@ -1,0 +1,117 @@
+{
+  "name": "mmoitems-config-helper",
+  "displayName": "MMOItems Config",
+  "publisher": "salyyy",
+  "version": "1.0.6",
+  "description": "Hỗ trợ config MMOItems nhanh chóng với auto-completion, gợi ý stats, enchantments và simulator.",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./dist/extension.js",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SalyyS1/mmoitems-vscode"
+  },
+  "homepage": "https://marketplace.visualstudio.com/publishers/salyyy",
+  "bugs": {
+    "url": "https://github.com/SalyyS1/mmoitems-vscode/issues"
+  },
+  "activationEvents": [
+    "onCommand:mmoitems.scaleItem",
+    "onCommand:mmoitems.preview",
+    "onCommand:mmoitems.effectTest",
+    "onCommand:mmoitems.randomItem"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "yaml",
+        "extensions": [
+          ".yml",
+          ".yaml"
+        ],
+        "aliases": [
+          "YAML"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "mmoitems.scaleItem",
+        "title": "🔄 Nhân bản & Scale MMOItem",
+        "category": "MMOItems"
+      },
+      {
+        "command": "mmoitems.preview",
+        "title": "🖼️ MMOItems Simulator",
+        "category": "MMOItems"
+      },
+      {
+        "command": "mmoitems.randomItem",
+        "title": "🎲 Tạo vật phẩm ngẫu nhiên",
+        "category": "MMOItems"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "mmoitems.preview",
+          "when": "resourceLangId == yaml",
+          "group": "navigation"
+        },
+        {
+          "command": "mmoitems.scaleItem",
+          "when": "resourceLangId == yaml",
+          "group": "navigation"
+        },
+        {
+          "command": "mmoitems.randomItem",
+          "when": "resourceLangId == yaml",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "mmoitems.preview",
+        "key": "alt+p",
+        "when": "editorTextFocus && resourceLangId == yaml"
+      },
+      {
+        "command": "mmoitems.scaleItem",
+        "key": "alt+s",
+        "when": "editorTextFocus && resourceLangId == yaml"
+      },
+      {
+        "command": "mmoitems.randomItem",
+        "key": "alt+r",
+        "when": "editorTextFocus && resourceLangId == yaml"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/assert": "^1.5.11",
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10.0.10",
+    "@types/vscode": "^1.75.0",
+    "assert": "^2.1.0",
+    "mocha": "^11.1.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^4.9.5",
+    "vsce": "^2.13.0",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
+  }
+}
