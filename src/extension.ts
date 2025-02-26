@@ -1,3 +1,4 @@
+//PHÁT TRIỂN BỞI Salyyy - Trong đó có sự hỗ trợ của ChatGPT để fix lỗi và list các ability, stats, enchants và tạo format toolstip
 import * as vscode from 'vscode';
 import * as yaml from 'js-yaml';
 
@@ -18,15 +19,15 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
-
+//Gợi ý enchants, abiliy, stats
 function dumpYamlWithoutQuotes(data: any): string {
     return yaml.dump(data, {
-        schema: yaml.JSON_SCHEMA, // ✅ Sử dụng JSON Schema để giữ số đúng chuẩn
+        schema: yaml.JSON_SCHEMA, 
         styles: {
-            '!!int': 'decimal',   // ✅ Giữ số nguyên đúng định dạng
-            '!!float': 'decimal'  // ✅ Giữ số thực đúng định dạng
+            '!!int': 'decimal',   
+            '!!float': 'decimal' 
         },
-        lineWidth: -1 // ✅ Không giới hạn độ dài dòng, tránh lỗi format
+        lineWidth: -1 
     });
 }
 
@@ -205,7 +206,7 @@ const completionProvider = vscode.languages.registerCompletionItemProvider(
 );
 
 
-
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 //randomitem
@@ -237,13 +238,13 @@ const completionProvider = vscode.languages.registerCompletionItemProvider(
             return;
         }
 
-        // ✅ Tạo vật phẩm ngẫu nhiên
+ 
         const newItem = generateRandomItem(rarity, material);
 
-        // ✅ Xuất YAML đúng chuẩn, không có dấu nháy đơn
+
         const yamlData = dumpYamlWithoutQuotes(newItem);
 
-        // ✅ Thêm vào file YAML
+   
         editor.edit(editBuilder => {
             editBuilder.insert(new vscode.Position(editor.selection.end.line + 2, 0), yamlData);
         });
@@ -279,7 +280,7 @@ const completionProvider = vscode.languages.registerCompletionItemProvider(
         };
     }
 
-    // 🛠 Fix kiểu số (int/float) bị YAML nhận sai
+   
     function getBaseStats(rarity: string, material: string) {
         const multiplier = { common: 1, rare: 1.5, epic: 2, legendary: 3 }[rarity] || 1;
 
@@ -299,7 +300,7 @@ const completionProvider = vscode.languages.registerCompletionItemProvider(
 
         let stats: Record<string, number> = {};
         (statsByMaterial[material] || []).forEach(stat => {
-            stats[stat] = parseFloat((Math.random() * 10 * multiplier).toFixed(2)); // Loại bỏ nháy đơn
+            stats[stat] = parseFloat((Math.random() * 10 * multiplier).toFixed(2));
         });
 
         return stats;
@@ -349,14 +350,14 @@ function getRandomAbilities(material: string) {
     let usedModes = new Set<string>();
 
     (abilitiesByMaterial[material] || []).forEach(ability => {
-        // 🔥 Chọn mode không trùng nhau
+        
         let availableMode = modes.find(mode => !usedModes.has(mode)) || "LEFT_CLICK";
         usedModes.add(availableMode);
 
         abilities[`ability${abilityCount}`] = {
             type: ability,
             mode: availableMode,
-            duration: parseFloat((Math.random() * 10).toFixed(1)), // ✅ Bỏ dấu nháy khỏi số
+            duration: parseFloat((Math.random() * 10).toFixed(1)), 
             damage: parseFloat((Math.random() * 5).toFixed(1)),
             mana: parseFloat((Math.random() * 10).toFixed(1)),
             charge: parseFloat((Math.random() * 5).toFixed(1)),
@@ -402,7 +403,10 @@ function getRandomSuffix() {
 
 
 
-// 🖼️ MMOItems Simulator
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+//  MMOItems Simulator
 const previewCommand = vscode.commands.registerCommand('mmoitems.preview', () => {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
@@ -429,7 +433,7 @@ const previewCommand = vscode.commands.registerCommand('mmoitems.preview', () =>
     }
 });
 
-// 🏷️ **Mapping stats với màu sắc và biểu tượng**
+
 const statMappings: Record<string, { display: string; icon: string }> = {
 // ⚔️ Weapon Stats
 "attack-damage": { display: "Attack Damage", icon: "⚔️" },
@@ -608,38 +612,35 @@ function convertMinecraftColor(code: string): string {
 function convertColorTags(text: string): string {
     if (!text) return text;
 
-    // ✅ Chuyển đổi HEX dạng `&#084CFBText`
+
     text = text.replace(/&#([0-9a-fA-F]{6})/g, `<span style="color:#$1">`);
 
-    // ✅ Chuyển đổi MiniMessage `<#HEX>Text`
     text = text.replace(/<#([0-9a-fA-F]{6})>(.*?)</g, `<span style="color:#$1">$2</span>`);
 
-    // ✅ Chuyển đổi Adventure `[COLOR=#HEX]Text[/COLOR]`
     text = text.replace(/\[COLOR=#([0-9a-fA-F]{6})\](.*?)\[\/COLOR\]/g, `<span style="color:#$1">$2</span>`);
 
-    // ✅ Chuyển đổi MiniMessage `<gradient:#084CFB:#ADF3FD>Text</gradient>`
     text = text.replace(/<gradient:#([0-9a-fA-F]{6}):#([0-9a-fA-F]{6})>(.*?)<\/gradient>/g,
         `<span style="background: linear-gradient(to right, #$1, #$2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">$3</span>`);
 
-    // ✅ Chuyển đổi MMOItems `<##084CFB>B<##2064FB>i`
+
     text = text.replace(/<##([0-9a-fA-F]{6})>(.)/g, `<span style="color:#$1">$2</span>`);
 
-    // ✅ Chuyển đổi Minecraft `§x§0§8§4§C§F§B`
+
     text = text.replace(/§x(§[0-9a-fA-F]){6}/g, match => {
         let hex = match.replace(/§x|§/g, '');
         return `<span style="color:#${hex}">`;
     });
 
-    // ✅ Chuyển đổi mã màu kiểu `&x&F&1&F&6&9&C` từng ký tự một
+
     text = text.replace(/&x((&[0-9a-fA-F]){6})/g, match => {
         let hex = match.replace(/&x|&/g, '');
         return `<span style="color:#${hex}">`;
     });
 
-    // ✅ Chuyển đổi Minecraft `&7[&b+1&7]`
+
     text = text.replace(/&([0-9a-fA-F])/g, (_, code) => `<span style="color:${convertMinecraftColor(code)}">`);
 
-    // 🔄 **Tự động đóng `<span>` nếu bị mở mà không đóng**
+
     const openTags = (text.match(/<span/g) || []).length;
     const closeTags = (text.match(/<\/span>/g) || []).length;
     if (openTags > closeTags) {
