@@ -2,8 +2,8 @@
   "name": "mmoitems-config-helper",
   "displayName": "MMOItems Config",
   "publisher": "salyyy",
-  "version": "1.0.6",
-  "description": "Hỗ trợ config MMOItems nhanh chóng với auto-completion, gợi ý stats, enchantments và simulator.",
+  "version": "1.1.1",
+  "description": "Seamlessly configure MMOItems with intelligent auto-completion, real-time stat and enchantment suggestions, and an interactive item simulator.🚀.",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -11,6 +11,9 @@
     "Programming Languages"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:languageId"
+  ],
   "icon": "icon.png",
   "repository": {
     "type": "git",
@@ -20,12 +23,7 @@
   "bugs": {
     "url": "https://github.com/SalyyS1/mmoitems-vscode/issues"
   },
-  "activationEvents": [
-    "onCommand:mmoitems.scaleItem",
-    "onCommand:mmoitems.preview",
-    "onCommand:mmoitems.effectTest",
-    "onCommand:mmoitems.randomItem"
-  ],
+
   "contributes": {
     "languages": [
       {
@@ -42,7 +40,7 @@
     "commands": [
       {
         "command": "mmoitems.scaleItem",
-        "title": "🔄 Nhân bản & Scale MMOItem",
+        "title": "🔄 LevelUp MMOItem",
         "category": "MMOItems"
       },
       {
@@ -52,7 +50,13 @@
       },
       {
         "command": "mmoitems.randomItem",
-        "title": "🎲 Tạo vật phẩm ngẫu nhiên",
+        "title": "🎲 Random Item",
+        "category": "MMOItems"
+      },
+
+      {
+        "command": "mmoitems.bulkModify",
+        "title": "🛠️ Modify Item",
         "category": "MMOItems"
       }
     ],
@@ -72,6 +76,11 @@
           "command": "mmoitems.randomItem",
           "when": "resourceLangId == yaml",
           "group": "navigation"
+        },
+        {
+          "command": "mmoitems.bulkModify",
+          "when": "resourceLangId == yaml",
+          "group": "navigation"
         }
       ]
     },
@@ -89,6 +98,12 @@
       {
         "command": "mmoitems.randomItem",
         "key": "alt+r",
+        "when": "editorTextFocus && resourceLangId == yaml"
+      },
+
+      {
+        "command": "mmoitems.bulkModify",
+        "key": "alt+b",
         "when": "editorTextFocus && resourceLangId == yaml"
       }
     ]

@@ -2,6 +2,7 @@
 # 🛠️ MMOItems Config Helper for VS Code
 
 🔥 Quickly configure **MMOItems YAML** with **auto-completion, stat suggestions, and enchantment hints**.
+
 🔥 Developed by **Salyyy - Founder of StellaStudio**
 [💬 Join Discord](https://discord.gg/pbkAuDsAuj) | [📜 More Info](https://guns.lol/salyyyy)
 
@@ -9,10 +10,15 @@
 
 ## 🎯 Key Features
 ✅ **MMOItems stat suggestions** for **Weapons, Armor, Consumables, RPG Items**
+
 ✅ **Generate random items** with tier, enchantments, and abilities
+
 ✅ **Preview items** with Minecraft-style tooltips
+
 ✅ **Scale items** by level, increasing stats accordingly
+
 ✅ **Auto-complete enchantments and abilities** from MMOItems
+
 ✅ **Proper YAML formatting** with no errors
 
 ---
@@ -23,6 +29,7 @@
 | `Alt+R` → `MMOItems: Generate Random Item` | 🎲 Create a new item |
 | `Alt+P` → `MMOItems: Preview Item` | 🖼️ Open item simulator |
 | `Alt+S` → `MMOItems: Scale Item` | 🔄 Scale item by level *(Select the item first!)* |
+| `Alt+B` → `MMOItems: Batch Modify Stats` | 🔧 Modify multiple item stats at once *(Selection required!)* |
 
 ---
 
@@ -48,7 +55,7 @@
 
 Or install via command:
 
-ext install salyyy.mmoitems-config-helper
+``ext install salyyy.mmoitems-config-helper``
 
 
 ---
