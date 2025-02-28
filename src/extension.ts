@@ -9,7 +9,7 @@ import { registerBulkModifyCommand } from './modifier';
 import * as yaml from 'js-yaml';
 
 //  **Kích hoạt Extension**
-let firstRun = true; // ✅ Cờ kiểm tra lần khởi động đầu tiên
+
 export function activate(context: vscode.ExtensionContext) {
     registerPreviewCommand(context);
 
