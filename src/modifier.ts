@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as yaml from "js-yaml";
 
-// 🛠 **Đăng ký lệnh chỉnh sửa hàng loạt**
+
 export function registerBulkModifyCommand(context: vscode.ExtensionContext) {
     if (context.subscriptions.some(sub => (sub as any)._command === "mmoitems.bulkModify")) {
         return;
@@ -62,7 +62,7 @@ export function registerBulkModifyCommand(context: vscode.ExtensionContext) {
     );
 }
 
-// 🖼️ **Tạo giao diện chỉnh sửa**
+
 function createBulkModifyWebview(
     context: vscode.ExtensionContext,
     selectedData: Record<string, any>,
@@ -112,7 +112,7 @@ function createBulkModifyWebview(
             let op = operation[1];
             let val = parseFloat(operation[2].replace("%", "")) / (operation[2].includes("%") ? 100 : 1);
 
-            // ✅ Chỉ sửa đổi giá trị số, giữ nguyên các phần tử khác
+            // Chỉ sửa đổi giá trị số, giữ nguyên các phần tử khác
             Object.keys(selectedData).forEach((item) => {
                 if (!selectedData[item]?.base) return;
 
@@ -138,7 +138,7 @@ function createBulkModifyWebview(
                                 break;
                         }
                     } else {
-                        // ✅ Giữ nguyên giá trị không phải số (material, dye-color, enchantments...)
+                        // Giữ nguyên giá trị không phải số (material, dye-color, enchantments...)
                         selectedData[item].base[stat] = originalValue;
                     }
                 });
@@ -155,7 +155,7 @@ function createBulkModifyWebview(
     });
 }
 
-// ✅ **Xuất YAML mà không thêm dấu ngoặc kép**
+// Xuất YAML mà không thêm dấu ngoặc kép**
 function dumpYamlWithoutQuotes(data: any): string {
     return yaml.dump(data, {
         schema: yaml.JSON_SCHEMA,
