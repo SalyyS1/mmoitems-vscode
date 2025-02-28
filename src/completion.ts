@@ -276,8 +276,6 @@ export const dyeColorPresentationProvider = vscode.languages.registerColorProvid
             const r = Math.round(color.red * 255);
             const g = Math.round(color.green * 255);
             const b = Math.round(color.blue * 255);
-
-            //  **Chỉ thay đoạn số, không thay cả dòng**
             return [new vscode.ColorPresentation(`${r} ${g} ${b}`)];
         }
     }
@@ -285,7 +283,6 @@ export const dyeColorPresentationProvider = vscode.languages.registerColorProvid
 
 
 
-// Xuất tất cả provider
 export function registerCompletionProviders(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         abilityProvider,
